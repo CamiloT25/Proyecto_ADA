@@ -1,4 +1,5 @@
 import os
+import random
 
 from experimento.timer import Timer
 import pandas as pd
@@ -18,7 +19,7 @@ def medir(funcion, n, repeticiones):
     return tiempos
 
 
-def run():
+def run(max_n=100, num_ns=5, max_reps=5000):
     
     algoritmos = {
         "bruteforce": partitions_count_exhaustive,
@@ -27,8 +28,8 @@ def run():
         "dp": q_iterativo
     }
 
-    tamaños = [10, 20, 30, 40, 50]
-    repeticiones = 10
+    tamaños = [random.randint(10, max_n) for _ in range(num_ns)]
+    repeticiones = random.randint(100, max_reps)
 
     filas = []
 
@@ -56,6 +57,7 @@ def run():
     # Guardar CSV con ruta absoluta
     ruta_resultados = os.path.join(os.path.dirname(__file__), "datos", "resultados.csv")
     df.to_csv(ruta_resultados, index=False)
+    
     print("\nRESULTADOS EN TABLA:\n")
     print(f"{'Algoritmo':<12} {'n':<4} {'min':<12} {'max':<12} {'promedio':<12}")
     print("-" * 60)
