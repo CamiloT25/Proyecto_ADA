@@ -19,7 +19,7 @@ def medir(funcion, n, repeticiones):
     return tiempos
 
 
-def run(max_n=100, num_ns=5, max_reps=5000):
+def run(max_n=30, num_ns=5, max_reps=5000):
     
     algoritmos = {
         "bruteforce": partitions_count_exhaustive,
