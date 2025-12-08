@@ -56,6 +56,16 @@ def run():
     # Guardar CSV con ruta absoluta
     ruta_resultados = os.path.join(os.path.dirname(__file__), "datos", "resultados.csv")
     df.to_csv(ruta_resultados, index=False)
+    print("\nRESULTADOS EN TABLA:\n")
+    print(f"{'Algoritmo':<12} {'n':<4} {'min':<12} {'max':<12} {'promedio':<12}")
+    print("-" * 60)
+
+    for fila in filas:
+     if "error" in fila:
+        print(f"{fila['algoritmo']:<12} {fila['n']:<4} ERROR")
+     else:
+        print(f"{fila['algoritmo']:<12} {fila['n']:<4} "
+              f"{fila['min']:<12.6g} {fila['max']:<12.6g} {fila['promedio']:<12.6g}")
 
     print("Experimento terminado.")
 
