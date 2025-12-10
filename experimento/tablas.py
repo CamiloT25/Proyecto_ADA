@@ -100,3 +100,33 @@ def imprimir_tabla_estabilidad_desde_csv():
               f"{fila.get('recursivo', float('nan')):<15.4f} "
               f"{fila.get('memo', float('nan')):<15.4f} "
               f"{fila.get('dp', float('nan')):<15.4f}")
+
+def imprimir_tabla_costo_total_desde_csv():
+    """
+    Calcula e imprime el costo computacional total de cada algoritmo,
+    sumando los tiempos promedio de todas las instancias de n.
+    """
+
+    ruta_csv = os.path.join(os.path.dirname(__file__), "datos", "resultados.csv")
+
+    if not os.path.exists(ruta_csv):
+        print(" No se encontró resultados.csv. Ejecuta el experimento primero.")
+        return
+
+    df = pd.read_csv(ruta_csv)
+
+    if "promedio" not in df.columns:
+        print(" No se encuentra la columna 'promedio' en el CSV.")
+        return
+
+    # Agrupar por algoritmo y sumar los promedios
+    totales = df.groupby("algoritmo")["promedio"].sum().sort_values()
+
+    print("\nCOSTO COMPUTACIONAL TOTAL (suma de tiempos promedio):\n")
+    print(f"{'Algoritmo':<15} {'Costo total [s]':<20}")
+    print("-" * 35)
+
+    for algoritmo, costo in totales.items():
+        print(f"{algoritmo:<15} {costo:<20.6f}")
+
+    print()

@@ -11,7 +11,8 @@ from algoritmos.dp import q_iterativo
 from experimento.tablas import (
     imprimir_tabla_comparativa_desde_csv,
     imprimir_tabla_relacion_velocidades_desde_csv,
-    imprimir_tabla_estabilidad_desde_csv
+    imprimir_tabla_estabilidad_desde_csv,
+    imprimir_tabla_costo_total_desde_csv
 )
 
 def medir(funcion, n, repeticiones):
@@ -83,10 +84,13 @@ def run(max_n=30, num_ns=5, max_reps=5000):
     imprimir_tabla_comparativa_desde_csv()
     imprimir_tabla_relacion_velocidades_desde_csv()
     imprimir_tabla_estabilidad_desde_csv()
+    imprimir_tabla_costo_total_desde_csv()
+    
 
     print("Experimento terminado.")
 
 
 if __name__ == "__main__":
     run()
+    
 
