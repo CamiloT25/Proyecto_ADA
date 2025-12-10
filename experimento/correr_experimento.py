@@ -1,6 +1,6 @@
 import os
 import random
-
+import statistics
 from experimento.timer import Timer
 import pandas as pd
 
@@ -8,7 +8,12 @@ from algoritmos.brute_force import partitions_count_exhaustive
 from algoritmos.recursive import q_R
 from algoritmos.recursive_memoization import q
 from algoritmos.dp import q_iterativo
-
+from experimento.tablas import (
+    imprimir_tabla_comparativa_desde_csv,
+    imprimir_tabla_relacion_velocidades_desde_csv,
+    imprimir_tabla_estabilidad_desde_csv,
+    imprimir_tabla_costo_total_desde_csv
+)
 
 def medir(funcion, n, repeticiones):
     tiempos = []
@@ -38,14 +43,21 @@ def run(max_n=30, num_ns=1000, max_reps=5000):
         for n in tamaños:
             try:
                 tiempos = medir(f, n, repeticiones)
+                prom = sum(tiempos) / repeticiones
+                std = statistics.stdev(tiempos)
+                cv = std / prom if prom != 0 else 0
+
                 filas.append({
                     "algoritmo": nombre,
                     "n": n,
                     "min": min(tiempos),
                     "max": max(tiempos),
-                    "promedio": sum(tiempos) / repeticiones
+                    "promedio": prom,
+                    "Desviacion_estandar":std,
+                    "Coeficiente_varicion":cv
                 })
             except RecursionError:
+                
                 filas.append({
                     "algoritmo": nombre,
                     "n": n,
@@ -68,10 +80,17 @@ def run(max_n=30, num_ns=1000, max_reps=5000):
      else:
         print(f"{fila['algoritmo']:<12} {fila['n']:<4} "
               f"{fila['min']:<12.6g} {fila['max']:<12.6g} {fila['promedio']:<12.6g}")
+    
+    imprimir_tabla_comparativa_desde_csv()
+    imprimir_tabla_relacion_velocidades_desde_csv()
+    imprimir_tabla_estabilidad_desde_csv()
+    imprimir_tabla_costo_total_desde_csv()
+    
 
     print("Experimento terminado.")
 
 
 if __name__ == "__main__":
     run()
+    
 
