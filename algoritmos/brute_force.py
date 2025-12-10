@@ -9,7 +9,7 @@ def partitions_count_exhaustive(n, max_part=None):
 
     # Configurar límite por defecto
     if max_part is None:
-        max_part = n-1
+        max_part = n
 
     # max_part inválido = 0 particiones
     if max_part <= 0:
